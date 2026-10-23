@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        session: [01-setup-and-basics, 02-interfaces, 03-functions, 04-dom-events, 05-drag-and-drop, 06-oop-classes, 07-generics-utility, 08-localstorage-state, 09-async-api, 10-final-react-preview]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd sessions/${{ matrix.session }}
+          npm ci
+
+      - name: Type check
+        run: |
+          cd sessions/${{ matrix.session }}
+          npm run typecheck
