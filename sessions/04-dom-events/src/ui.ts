@@ -27,6 +27,13 @@ export const renderTask = (task: Task): string => {
   const safeDescription = task.description ? escapeHTML(task.description) : '';
   const safeAssignee = task.assignee ? escapeHTML(task.assignee) : '';
 
+  // نقشه trạngتی در فارسی
+  const statusLabels: Record<string, string> = {
+    TODO: 'در انتظار انجام',
+    DOING: 'در حال انجام',
+    DONE: 'تکمیل شده',
+  };
+
   return `
     <div class="task-card" data-task-id="${task.id}" draggable="true">
       <div class="task-title">${safeTitle}</div>
@@ -50,13 +57,13 @@ export const renderTask = (task: Task): string => {
 export const renderColumn = (column: Column): string => {
   const tasksHTML = column.tasks.length > 0
     ? column.tasks.map(task => renderTask(task)).join('')
-    : '<div class="empty-state">هنوز تسکی اضافه نشده است</div>';
+    : '<div class="empty-state">هنوز تسکی تعریف نشده است</div>';
 
   return `
     <div class="column" data-column-id="${column.id}">
       <div class="column-header">
         <h2 class="column-title">${escapeHTML(column.title)}</h2>
-        <span class="task-count">${column.tasks.length}</span>
+        <span class="task-count">${column.tasks.length} تسک</span>
       </div>
       <div class="tasks-container">
         ${tasksHTML}
@@ -93,6 +100,7 @@ export const updateStats = (board: Board): void => {
   const totalTasks = allTasks.length;
   const progress = calculateProgress(board);
   const todoCount = allTasks.filter(t => t.status === 'TODO').length;
+  const doingCount = allTasks.filter(t => t.status === 'DOING').length;
   const doneCount = allTasks.filter(t => t.status === 'DONE').length;
 
   const totalTasksEl = document.getElementById('totalTasks');
@@ -119,7 +127,7 @@ export const updateStats = (board: Board): void => {
 };
 
 /**
- * نمایش Toast Notification
+ * نمایش Toast Notification — پیام‌های شما را به فارسی نمایش می‌دهد
  */
 export const showMessage = (
   message: string,
@@ -129,29 +137,51 @@ export const showMessage = (
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
   toast.textContent = message;
+  toast.setAttribute('role', 'alert');
+  toast.setAttribute('aria-live', 'polite');
 
-  // استایل اینلاین (در پروژه واقعی از CSS استفاده کنید)
+  // استایل اینلاین
   toast.style.cssText = `
     position: fixed;
-    bottom: 24px;
-    left: 24px;
-    padding: 16px 24px;
-    background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#f59e0b'};
+    bottom: 30px;
+    right: 30px;
+    padding: 18px 28px;
+    border-radius: 16px;
     color: white;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
-    z-index: 9999;
+    font-weight: 700;
+    font-size: 0.95rem;
     font-family: 'Vazirmatn', sans-serif;
-    font-weight: 600;
-    animation: slideIn 0.3s ease-out;
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: toast-slide-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    direction: rtl;
   `;
+
+  // رنگ بر اساس نوع پیام
+  if (type === 'success') {
+    toast.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.95), rgba(6, 182, 212, 0.95))';
+    toast.style.boxShadow = '0 25px 55px rgba(16, 185, 129, 0.35), 0 0 45px rgba(16, 185, 129, 0.25)';
+  } else if (type === 'error') {
+    toast.style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(236, 72, 153, 0.95))';
+    toast.style.boxShadow = '0 25px 55px rgba(239, 68, 68, 0.35), 0 0 45px rgba(239, 68, 68, 0.25)';
+  } else {
+    toast.style.background = 'linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(168, 85, 247, 0.95))';
+    toast.style.boxShadow = '0 25px 55px rgba(245, 158, 11, 0.35), 0 0 45px rgba(168, 85, 247, 0.25)';
+  }
 
   document.body.appendChild(toast);
 
-  // حذف بعد از ۳ ثانیه
+  // حذف خودکار بعد از ۳ ثانیه
   setTimeout(() => {
     toast.style.opacity = '0';
-    toast.style.transition = 'opacity 0.3s';
-    setTimeout(() => toast.remove(), 300);
+    toast.style.transform = 'translateY(20px)';
+    toast.style.transition = 'all 0.35s ease-out';
+    setTimeout(() => toast.remove(), 350);
   }, 3000);
 };

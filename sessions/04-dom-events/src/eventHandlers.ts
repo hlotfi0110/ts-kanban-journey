@@ -15,7 +15,7 @@ export const initializeEventHandlers = (board: Board): void => {
   setupAddTaskHandler();
   setupDeleteTaskHandler();
 
-  console.log('✅ Event Handler ها نصب شدند');
+  console.log('✅ مدیریت‌کننده رویدادها فعال شد');
 };
 
 // ============================================
@@ -51,10 +51,10 @@ const setupAddTaskHandler = (): void => {
     // ساخت تسک جدید
     const newTask = createTask(title, priority);
 
-    // اضافه کردن به اولین ستون (TODO)
+    // اضافه کردن به اولین ستون (در انتظار انجام)
     const todoColumn = currentBoard.columns[0];
     if (!todoColumn) {
-      showMessage('❌ ستون TODO پیدا نشد!', 'error');
+      showMessage('❌ ستون «در انتظار انجام» یافت نشد!', 'error');
       return;
     }
 
@@ -63,7 +63,7 @@ const setupAddTaskHandler = (): void => {
 
     // رندر مجدد
     renderBoard(currentBoard);
-    showMessage(`✅ تسک "${title}" اضافه شد`);
+    showMessage(`✅ تسک «${title}» با موفقیت اضافه شد`);
 
     // پاک کردن فرم
     titleInput.value = '';
@@ -73,7 +73,7 @@ const setupAddTaskHandler = (): void => {
   // نصب Event Listener ها
   addBtn.addEventListener('click', handleAddTask);
 
-  // Enter در input هم تسک را اضافه کند
+  //Enter در input هم تسک را اضافه کند
   titleInput.addEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -106,7 +106,7 @@ const setupDeleteTaskHandler = (): void => {
     // گرفتن taskId از data attribute
     const taskId = target.dataset.taskId;
     if (!taskId) {
-      console.error('❌ data-task-id پیدا نشد');
+      console.error('❌ شناساگر تسک یافت نشد');
       return;
     }
 
@@ -130,7 +130,7 @@ const setupDeleteTaskHandler = (): void => {
 
     if (taskFound) {
       renderBoard(currentBoard);
-      showMessage('🗑️ تسک حذف شد');
+      showMessage('🗑️ تسک با موفقیت حذف شد');
     } else {
       showMessage('❌ تسک پیدا نشد!', 'error');
     }

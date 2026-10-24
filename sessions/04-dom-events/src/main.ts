@@ -16,7 +16,7 @@ const initialBoard: Board = {
     {
       id: 'col-1',
       createdAt: Date.now(),
-      title: '📝 باید انجام شود',
+      title: '📝 در انتظار انجام',
       status: 'TODO',
       tasks: [],
       maxTasks: 10
@@ -32,7 +32,7 @@ const initialBoard: Board = {
     {
       id: 'col-3',
       createdAt: Date.now(),
-      title: '✅ انجام شده',
+      title: '✅ تکمیل شده',
       status: 'DONE',
       tasks: []
     }
@@ -44,7 +44,7 @@ const initialBoard: Board = {
 // ============================================
 
 const initApp = (): void => {
-  console.log('🚀 شروع اپلیکیشن Kanban Board');
+  console.log('🚀 راه‌اندازی اپلیکیشن بورد کانبان');
 
   // رندر اولیه بورد
   renderBoard(initialBoard);
@@ -53,11 +53,11 @@ const initApp = (): void => {
   initializeEventHandlers(initialBoard);
 
   console.log('✅ اپلیکیشن آماده است!');
-  console.log(`📊 ${initialBoard.columns.length} ستون ایجاد شد`);
+  console.log(`📊 تعداد ستون‌ها: ${initialBoard.columns.length}`);
 };
 
 // ============================================
-// ⏱️ انتظار برای DOM
+// ⏱️ انتظار برای بارگذاری DOM
 // ============================================
 
 // بررسی آماده بودن DOM قبل از اجرا

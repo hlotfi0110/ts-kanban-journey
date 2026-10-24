@@ -6,7 +6,7 @@
   <meta name="description" content="بورد مدیریت پروژه کانبان با طراحی مدرن و شیشه‌ای - ساخته شده با TypeScript">
   <meta name="theme-color" content="#0a0a1a">
   
-  <title>✨ بورد کانبان | Kanban Aurora</title>
+  <title>✨ بورد مدیریت تسک | Kanban Aurora</title>
   
   <!-- 🎨 فونت وزیرمتن (Variable Font) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +33,7 @@
           <div class="logo-glow"></div>
           <h1 class="logo-title">
             <span class="logo-icon">✨</span>
-            <span>Kanban Aurora</span>
+            <span>بورد کانبان</span>
           </h1>
           <p class="logo-subtitle">مدیریت هوشمند تسک‌ها با TypeScript</p>
         </div>
@@ -51,7 +51,7 @@
         <div class="stat-card glass-card stat-total">
           <div class="stat-icon">📋</div>
           <div class="stat-content">
-            <span class="stat-label">کل تسک‌ها</span>
+            <span class="stat-label">تعداد کل تسک‌ها</span>
             <span class="stat-value" id="totalTasks">۰</span>
           </div>
           <div class="stat-glow"></div>
@@ -69,7 +69,7 @@
         <div class="stat-card glass-card stat-todo">
           <div class="stat-icon">📝</div>
           <div class="stat-content">
-            <span class="stat-label">در انتظار</span>
+            <span class="stat-label">در انتظار انجام</span>
             <span class="stat-value" id="todoCount">۰</span>
           </div>
         </div>
@@ -84,12 +84,12 @@
       </div>
     </header>
 
-    <!-- ➕ فرم افزودن تسک -->
+    <!-- ➕ فرم افزودن تسک جدید -->
     <section class="add-task-section glass-panel floating-panel">
       <form id="addTaskForm" class="add-task-form" autocomplete="off">
         <div class="form-header">
           <span class="form-icon">➕</span>
-          <h2>تسک جدید</h2>
+          <h2>افزودن تسک جدید</h2>
         </div>
         
         <div class="form-grid">
@@ -108,15 +108,15 @@
           <div class="input-group input-priority">
             <label for="taskPriority">اولویت</label>
             <select id="taskPriority" name="priority">
-              <option value="LOW">🟢 کم</option>
-              <option value="MEDIUM" selected>🟡 متوسط</option>
-              <option value="HIGH">🔴 زیاد</option>
+              <option value="LOW">🟢 اولویت کم</option>
+              <option value="MEDIUM" selected>🟡 اولویت متوسط</option>
+              <option value="HIGH">🔴 اولویت زیاد</option>
             </select>
           </div>
           
           <button type="submit" id="addTaskBtn" class="submit-btn glow-btn">
             <span class="btn-icon">✨</span>
-            <span>افزودن تسک</span>
+            <span>ثبت تسک جدید</span>
             <span class="btn-shine"></span>
           </button>
         </div>
@@ -130,7 +130,7 @@
       </div>
     </section>
 
-    <!-- 📌 Footer -->
+    <!-- 📌 پاورفوتر -->
     <footer class="app-footer glass-panel">
       <p>
         ساخته شده با <span class="heart">❤️</span> و 
